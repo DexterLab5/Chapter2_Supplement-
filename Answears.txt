@@ -1,0 +1,252 @@
+1.
+a. 001110011010011111111000
+b. 0xC97B
+c. 11010101111001001100
+d. 26E7B5
+
+2.
+Decimal         Binary              Hexadecimal 
+0               0                   0
+167             10100111            9A1D8F
+62              111110              3E
+188             10111100            BC
+55              00110111            37
+136             10001000            88
+243             11110011            F3
+82              01010010            52
+172             10101100            AC
+231             11100111            E7
+
+3.
+~a = -106       01000001            00111100
+~b = -86        01111101
+
+4.
+20             1
+7F             1              
+-21            0
+0              1
+
+5.
+C3             618                  30            30  
+11000011       110 0001 1000        11 0000       11 0000
+
+75             258                  1D            1D
+100 1011       10 0101 1000         1 1101        1 1101
+
+87             438                  21            21
+1000 0111      010000111000         00100001      00100001
+
+66             330                  19            19
+01100110       001100110000         00011001      00011001
+
+6.
+a.
+#include <stdio.h>
+
+long decToBinary(int n)
+{
+    long res;
+    // array to store binary number
+    int binaryNum[32];
+  
+    // counter for binary array
+    int i = 0;
+    while (n > 0) {
+        // storing remainder in binary array
+        binaryNum[i] = n % 2;
+        n = n / 2;
+        i++;
+    }
+  
+    // printing binary array in reverse order
+    for (int j = i - 1; j >= 0; j--) {
+        //printf("%d", binaryNum[j]);
+        res += binaryNum[j];
+        res *= 10;
+    }
+    return res / 10;
+}
+
+int main(void) {
+    int x = 0;
+    printf("Enter int: ");
+    scanf("%d", &x);
+    //printf("%i", x);
+
+    long bin = decToBinary(x);
+    printf("%i", bin);    
+
+    while (bin > 0) {
+        if (bin % 10 == 0) {
+            return 1;
+        }
+        bin /= 10;
+    }
+    return 0;
+}
+
+b.
+#include <stdio.h>
+
+long decToBinary(int n)
+{
+    long res;
+    // array to store binary number
+    int binaryNum[32];
+  
+    // counter for binary array
+    int i = 0;
+    while (n > 0) {
+        // storing remainder in binary array
+        binaryNum[i] = n % 2;
+        n = n / 2;
+        i++;
+    }
+  
+    // printing binary array in reverse order
+    for (int j = i - 1; j >= 0; j--) {
+        //printf("%d", binaryNum[j]);
+        res += binaryNum[j];
+        res *= 10;
+    }
+    return res / 10;
+}
+
+int main(void) {
+    int x = 0;
+    printf("Enter int: ");
+    scanf("%d", &x);
+    //printf("%i", x);
+
+    long bin = decToBinary(x);
+    printf("%i", bin);    
+
+    while (bin > 0) {
+        if (bin % 10 == 1) {
+            return 1;
+        }
+        bin /= 10;
+    }
+    return 0;
+}
+
+c.
+#include <stdio.h>
+
+long decToBinary(int n)
+{
+    long res;
+    // array to store binary number
+    int binaryNum[32];
+  
+    // counter for binary array
+    int i = 0;
+    while (n > 0) {
+        // storing remainder in binary array
+        binaryNum[i] = n % 2;
+        n = n / 2;
+        i++;
+    }
+  
+    // printing binary array in reverse order
+    for (int j = i - 1; j >= 0; j--) {
+        //printf("%d", binaryNum[j]);
+        res += binaryNum[j];
+        res *= 10;
+    }
+    return res / 10;
+}
+
+int main(void) {
+    int x = 0;
+    printf("Enter int: ");
+    scanf("%d", &x);
+    //printf("%i", x);
+
+    long bin = decToBinary(x);
+    printf("%i", bin);    
+
+    for (int i = 0; i < 8; i++) {
+        if (bin % 10 == 1) {
+            return 1;
+        }
+        bin /= 10;
+        if (bin == 0) return 0;
+    }
+
+    return 0;
+}
+
+d.
+#include <stdio.h>
+#include <stdbool.h>
+
+long decToBinary(int n, int *bits)
+{
+    long res;
+    // array to store binary number
+    int binaryNum[32];
+  
+    // counter for binary array
+    int i = 0;
+    while (n > 0) {
+        // storing remainder in binary array
+        binaryNum[i] = n % 2;
+        n = n / 2;
+        i++;
+    }
+  
+    // printing binary array in reverse order
+    for (int j = i - 1; j >= 0; j--) {
+        //printf("%d", binaryNum[j]);
+        res += binaryNum[j];
+        res *= 10;
+        *bits += 1;
+    }
+    return res / 10;
+}
+
+bool check(int binary, int bits) {
+    int var = 0;
+    if (bits > 1) {
+        var = 10;
+    }
+    for (int i = 0; i < bits-2; i++) {
+        var *= 10;
+    } 
+    int n = 0;
+    if (var != 0) {
+        n = binary / var;
+    }
+    else {
+        n = binary % 10;
+    }
+    while (n > 1) {
+        n %= 10;
+    }
+    return n == 0;
+}
+
+int main(void) {
+    int x = 0;
+    printf("Enter int: ");
+    scanf("%d", &x);
+    //printf("%i", x);
+    int bits = 0;
+    long bin = decToBinary(x, &bits);
+    printf("%i", bin);    
+
+    for (int i = 0; i < 8; i++) {
+        if (check(bin, bits)) {
+            return 1;
+        }
+        bits--;
+        
+        if (bin == 0) return 0;
+    }
+
+    return 0;
+}
+
+7.
