@@ -250,3 +250,122 @@ int main(void) {
 }
 
 7.
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
+#define INT_SIZE sizeof(int)        // Size of int in bytes
+#define INT_BITS INT_SIZE * 8 - 1   // Size of int in bits - 1
+
+int get_length(int x) {
+    int l = 0;
+    while (x > 0) {
+        l++;
+        x /= 10;
+    }
+    return l;
+}
+
+int hex_to_decimal(int x) {
+    int n = get_length(x);
+    char hex[n+1];
+    int del = pow(10,n-1);
+    int j = 0;
+    while (del > 0) {
+        hex[j] = (x / del % 10) + '0';
+        del /= 10;
+        j++;
+    }
+    hex[n] = '\0';
+    
+
+    long long decimal, place;
+    int i = 0, val, len;
+
+    decimal = 0;
+    place = 1;
+    /* Find the length of total number of hex digit */
+    len = strlen(hex);
+    len--;
+
+    /*
+     * Iterate over each hex digit
+     */
+    for(i=0; hex[i]!='\0'; i++)
+    {
+ 
+        /* Find the decimal representation of hex[i] */
+        if(hex[i]>='0' && hex[i]<='9')
+        {
+            val = hex[i] - 48;
+        }
+        else if(hex[i]>='a' && hex[i]<='f')
+        {
+            val = hex[i] - 97 + 10;
+        }
+        else if(hex[i]>='A' && hex[i]<='F')
+        {
+            val = hex[i] - 65 + 10;
+        }
+
+        decimal += val * pow(16, len);
+        len--;
+    }
+    return decimal;
+
+}
+
+void dec_to_hex(int x) {
+    long decimalnum, quotient, remainder;
+    int i, j = 0;
+    char hexadecimalnum[100];
+ 
+    decimalnum = x;
+ 
+    quotient = decimalnum;
+ 
+    while (quotient != 0)
+    {
+        remainder = quotient % 16;
+        if (remainder < 10)
+            hexadecimalnum[j++] = 48 + remainder;
+        else
+            hexadecimalnum[j++] = 55 + remainder;
+        quotient = quotient / 16;
+    }
+ 
+    // display integer into character
+    printf("0x");
+    for (i = j-1; i >= 0; i--)
+            printf("%c", hexadecimalnum[i]);
+}
+
+void rotate_left(unsigned int x, unsigned char n){
+    x = hex_to_decimal(x);
+    int DROPPED_MSB;
+
+    // The effective rotation
+    n %= INT_BITS;
+
+
+    // Loop till rotation becomes 0
+    while(n--)
+    {
+        // Get MSB of num before it gets dropped
+        DROPPED_MSB = (x >> INT_BITS) & 1; 
+
+        // Left rotate num by 1 and 
+        // Set its dropped MSB as new LSB
+        x = (x << 1) | DROPPED_MSB;
+    }
+
+    //printf("%i",x);
+
+    dec_to_hex(x);
+}
+
+int main(void) {
+    unsigned x = 12345678;
+    unsigned char c = 2;
+    rotate_left(x, c);
+}
